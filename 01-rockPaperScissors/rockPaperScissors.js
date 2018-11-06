@@ -17,7 +17,31 @@
 *
 */
 
-var rockPaperScissors = function (
-) {
-  // TODO: your solution here
+var rockPaperScissors = function (number) {
+  var makeCases = function(n) {
+    if(n>0) {
+      cases.push()
+      makeCases(--n)
+    }
+  }
+
+  const choices = ['rock', 'scissors', 'paper']
+  const cases = []
+
+  if(number === undefined) {
+    for (let choice1 of choices) {
+      for(let choice2 of choices) {
+        for(let choice3 of choices) {
+          cases.push([choice1, choice2, choice3])
+        }
+      }
+    }
+  }
+  else if(typeof number === 'number' && number > 0) {
+    for(let choice of choices) {
+      makeCases(number)
+    }
+  }
+
+  return cases
 };
