@@ -22,13 +22,31 @@
  * including non-strings.
 */
 
-Array.prototype.isSubsetOf = function(array){
+Array.prototype.isSubsetOf = function (array) {
   // Your code here
-  for(let v of this) {
-    if(!array.includes(v)) {
+  // for(let v of this) {
+  //   if(!array.includes(v)) {
+  //     return false;
+  //   }
+  // }
+
+  // return true;
+  const arrayToObj = arr => {
+    const obj = {};
+    arr.forEach(v => { obj[v] = v });
+    return obj;
+  }
+
+  const thisObj = arrayToObj(this);
+  const paramObj = arrayToObj(array);
+
+
+  for (let key in thisObj) {
+    if (!(key in paramObj)) {
       return false;
     }
   }
+
 
   return true;
 };
