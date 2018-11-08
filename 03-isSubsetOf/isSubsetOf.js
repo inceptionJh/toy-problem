@@ -24,4 +24,11 @@
 
 Array.prototype.isSubsetOf = function(array){
   // Your code here
+  for(let v of this) {
+    if(!array.includes(v)) {
+      return false;
+    }
+  }
+
+  return true;
 };
