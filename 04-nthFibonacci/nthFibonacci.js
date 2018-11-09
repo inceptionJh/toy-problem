@@ -22,7 +22,27 @@
 
 var nthFibonacci = function (n) {
   // TODO: implement me!
+  let prepreFib = 0;
+  let preFib = 1;
+  let nthFib = 0;
+
+  for (let i = 0; i < n; i++) {
+    if(i === 0) {
+      nthFib = 0;
+    }
+
+    if(i === 1) {
+      nthFib = 1;
+    }
+
+    nthFib = preFib + prepreFib;
+    prepreFib = preFib;
+    preFib = nthFib;
+  }
+
+  return nthFib;
 };
 
-
+console.log(nthFibonacci(4));
+console.log("end");
 
