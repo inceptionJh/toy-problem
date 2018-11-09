@@ -22,27 +22,19 @@
 
 var nthFibonacci = function (n) {
   // TODO: implement me!
-  let prepreFib = 0;
-  let preFib = 1;
-  let nthFib = 0;
-
-  for (let i = 0; i < n; i++) {
-    if(i === 0) {
-      nthFib = 0;
-    }
-
-    if(i === 1) {
-      nthFib = 1;
-    }
-
-    nthFib = preFib + prepreFib;
-    prepreFib = preFib;
-    preFib = nthFib;
+  if(n === 0) {
+    return 0;
   }
 
-  return nthFib;
+  if(n === 1) {
+    return 1;
+  }
+
+  const fibResult = [0, 1];
+
+  for (let i = 2; i <= n; i++) {
+    fibResult.push(fibResult[i-2] + fibResult[i-1]);
+  }
+  // console.log(fibResult);
+  return fibResult[fibResult.length-1];
 };
-
-console.log(nthFibonacci(4));
-console.log("end");
-
