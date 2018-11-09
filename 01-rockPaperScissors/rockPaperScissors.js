@@ -1,35 +1,56 @@
-const choices = ['rock', 'scissors', 'paper']
-const test = []
-
-var makeCases = function (n, arr) {
-
-  if (n !== 0) {
-    for (let choice of choices) {
-      makeCases(--n, arr.concat(choice))
+var Tree = (
+  class Tree {
+    constructor(value) {
+      this.value = value;
+      this.children = [];
+      this.depth = null;
     }
-  }
-  else {
-    test.push(arr)    
-  }
 
-}
-
-var rockPaperScissors = function (number) {
-
-  const cases = []
-
-  if (number === undefined) {
-    for (let choice1 of choices) {
-      for (let choice2 of choices) {
-        for (let choice3 of choices) {
-          cases.push([choice1, choice2, choice3])
-        }
+    addChildren(n) {
+      this.depth = n;
+      if (n > 0) {
+        this.children = [new Tree("rock"), new Tree("paper"), new Tree("scissors")];
+        this.children.forEach(child => { child.addChildren(n - 1) })
       }
     }
-  }
-  else if (typeof number === 'number' && number > 0) {
-    return makeCases(number, [])
-  }
 
-  return cases
+    logFromLastChildren(depth, temp, result) {
+      if (this.depth !== depth) {
+        temp[depth - this.depth - 1] = this.value;
+      }
+
+      if (this.depth === 0) {
+        result.push(temp.slice());
+      }
+
+      this.children.forEach(child => {
+        child.logFromLastChildren(depth, temp, result);
+      })
+    }
+  }
+)
+
+var rockPaperScissors = function (number) {
+  if (number === undefined) {
+    const mainTree = new Tree(null);
+
+    const depth = 3;
+    mainTree.addChildren(depth);
+
+    const result = [];
+    let temp = Array(depth);
+    mainTree.logFromLastChildren(depth, temp, result);
+    return result;
+  }
+  else {
+    const mainTree = new Tree(null);
+
+    const depth = number;
+    mainTree.addChildren(depth);
+
+    const result = [];
+    let temp = Array(depth);
+    mainTree.logFromLastChildren(depth, temp, result);
+    return result;
+  }
 };
