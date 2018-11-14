@@ -22,15 +22,19 @@
 * 추가 크레딧: 두 개 이상의 입력 문자열을 처리하도록 기능을 확장합니다.
 */
 
-var commonCharacters = function(string1, string2) {
+var commonCharacters = function(string1, ...argsStr) {
   // TODO: Your code here!
-  let cc = string1;
-
-  for(let char of string1) {
-    if(string2.includes(char)) {
-      cc += char;
+  let cc = "";
+  
+  for(let string of argsStr) {
+    for(let char of string1) {
+      if(string.includes(char)) {
+        cc += char;
+      }
     }
+    string1 = cc;
+    cc = "";
   }
 
-  return cc;
+  return string1;
 };
