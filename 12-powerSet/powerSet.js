@@ -16,6 +16,27 @@
  * powerSet("jump")
  * -> ["", "j", "ju", "jm", "jp", "jmu", "jmp", "jpu", "jmpu", "u", "m", "p", "mu", "mp", "pu", "mpu"]
  */
+const box = {};
 
-var powerSet = function(str){
+class Tree {
+  constructor(child) {
+    this.child = child;
+  }
+
+  depthLog(children, box) {
+    for(let c of children) {
+      box[c] = c;
+      children.depthLog(c, box);
+    }
+  }
 }
+
+const tree = new Tree("asd");
+tree.depthLog(tree.child, box);
+console.log(box);
+
+var powerSet = function (str = "") {
+
+}
+
+// powerSet("a")
