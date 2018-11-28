@@ -33,8 +33,17 @@
 
 'use strict';
 
-var compose = function(){
+var compose = function (...argsFn) {
+  return function (...args) {
+    let result = argsFn[argsFn.length - 1](...args);
+
+    for (let i = argsFn.length - 2; i >= 0; i--) {
+      result = argsFn[i](result);
+    }
+
+    return result;
+  }
 };
 
-var pipe = function(){
+var pipe = function (...argsFn) {
 };
