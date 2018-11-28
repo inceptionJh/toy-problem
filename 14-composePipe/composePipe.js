@@ -46,4 +46,13 @@ var compose = function (...argsFn) {
 };
 
 var pipe = function (...argsFn) {
+  return function (...args) {
+    let result = argsFn[0](...args);
+
+    for (let i = 1; i < argsFn.length; i++) {
+      result = argsFn[i](result);
+    }
+
+    return result;
+  }
 };
