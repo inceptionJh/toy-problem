@@ -9,24 +9,24 @@
  */
 
 
-var binarySearch = function (array, target, originalMidIdx=Math.floor(array.length/2)) {
-  let midIdx = Math.floor(array.length / 2);
+var binarySearch = function (array, target) {
+  let low = 0;
+  let high = array.length - 1;
   
-  if(array[midIdx] === target) {
-    return originalMidIdx;
-  }
-  
-  if(array[midIdx] < target) {
-    const newArr = array.slice(midIdx + 1, array.length);
-    return binarySearch(newArr, target, originalMidIdx+midIdx);
-  }
-  
-  if(array[midIdx] > target) {
-    const newArr = array.slice(0, midIdx);
-    return binarySearch(newArr, target, originalMidIdx-midIdx);
+  while (low <= high) {
+    let mid = Math.floor((low + high) / 2);
+    
+    if(array[mid] > target) {
+      high = mid - 1;
+    }
+    
+    if(array[mid] < target) {
+      low = mid + 1;
+    }
+    
+    if(array[mid] === target) {
+      return mid;
+    }
+
   }
 };
-
-const result = binarySearch([1, 2, 3, 4, 5], 2);
-
-console.log(result);
