@@ -40,4 +40,6 @@
 
 
 var asyncMap = function(tasks, callback){
+  const asyncResult = tasks.map(fn => fn(callback));
+  return Promise.all(asyncResult);
 };
