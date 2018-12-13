@@ -12,17 +12,58 @@
  * inputs well.
  */
 
-var longestRun = function (string) {
-  // TODO: Your code here!
-};
+/**
+ * @param {String} string
+ */
+function longestRun(string) {
+  if(string.length === 0) return [0, 0];
+  /**
+   * ### example  
+   * - string: "aaabbc"
+   *```js
+    {
+        a: 3,
+        b: 2,
+        c: 1
+    }
+    ```
+   */
+  const charLengths = {};
+
+  // make charLengths content
+  for (let idx = 0; idx < string.length; idx++) {
+    const char = string[idx];
+
+    if (charLengths.hasOwnProperty(char)) {
+      charLengths[char] += 1;
+    } else {
+      charLengths[char] = 1;
+    }
+  }
+
+  // find longest char
+  let maxChar = { char: "", length: 0 };
+
+  for (let char in charLengths) {
+    const lengthOfChar = charLengths[char];
+
+    maxChar =
+      maxChar.length >= lengthOfChar
+        ? maxChar
+        : { char, length: charLengths[char] };
+  }
+
+  const startIdx = string.indexOf(maxChar.char);
+  return [startIdx, startIdx+maxChar.length-1];
+}
 
 // If you need a random string generator, use this!
 // (you wont need this function for your solution but it may help with testing)
-var randomString = function (len) {
+var randomString = function(len) {
   var text = "";
   var possible = "abcdefghijklmnopqrstuvwxyz";
 
-  for(var i = 0; i < len; i++) {
+  for (var i = 0; i < len; i++) {
     text += possible.charAt(Math.floor(Math.random() * possible.length));
   }
 
