@@ -20,21 +20,20 @@
  *
  */
 
-var nthFibonacci = function (n) {
-  // TODO: implement me!
-  if(n === 0) {
+var nthFibonacci = function(n) {
+  if (n === 0) {
     return 0;
   }
 
-  if(n === 1) {
+  if (n === 1) {
     return 1;
   }
 
   const fibResult = [0, 1];
 
   for (let i = 2; i <= n; i++) {
-    fibResult.push(fibResult[i-2] + fibResult[i-1]);
+    fibResult.push(fibResult[i - 2] + fibResult[i - 1]);
   }
-  // console.log(fibResult);
-  return fibResult[fibResult.length-1];
+
+  return fibResult[fibResult.length - 1];
 };
