@@ -1,5 +1,5 @@
-"use strict";
 /*jshint expr:true*/
+
 /*
  * Bubble sort is the most basic sorting algorithm in all of Computer
  * Sciencedom. It works by starting at the first element of an array and
@@ -23,26 +23,30 @@
  * through the array? Make it happen, boss. Again: Has the time complexity of
  * your algorithm changed?
  */
+
 /*
  * Example usage:
  * bubbleSort([2, 1, 3]); // yields [1, 2, 3]
  *
  */
+
 // Introduce i into the global scope so we can test function efficiency
 var i;
+
 // Feel free to add helper functions if needed.
-var leftIsBigger = function (num1, num2) {
-    return num1 > num2 ? true : false;
+
+const leftIsBigger = function(num1: number, num2: number) {
+  return num1 > num2 ? true : false;
 };
-var bubbleSort = function (array) {
-    var _a;
-    for (var i_1 = 0; i_1 < array.length - 1; i_1++) {
-        for (var j = 0; j < array.length - i_1 - 1; j++) {
-            if (leftIsBigger(array[j], array[j + 1])) {
-                _a = [array[j + 1], array[j]], array[j] = _a[0], array[j + 1] = _a[1];
-            }
-        }
+
+const bubbleSort = function(array: number[]) {
+  for (let i = 0; i < array.length - 1; i++) {
+    for (let j = 0; j < array.length - i - 1; j++) {
+      if (leftIsBigger(array[j], array[j + 1])) {
+        [array[j], array[j + 1]] = [array[j + 1], array[j]];
+      }
     }
-    return array;
+  }
+
+  return array;
 };
-//# sourceMappingURL=bubbleSort.js.map
