@@ -1,20 +1,17 @@
-/* Write a function that finds the largest possible product of any three numbers
- * from an array.
- * 
- * Example:
- * largestProductOfThree([2, 1, 3, 7]) === 42
- *
- * Extra credit: Make your function handle negative numbers.
- */
-
-
-var largestProductOfThree = function(array) {
-  const allCase = []
-  const arrLen = array.length
-  for (let i = 0; i < arrLen-2; i++)
-    for (let j = i+1; j < arrLen-1; j++)
-      for (let k = j+1; k < arrLen; k++)
-        allCase.push(array[i]*array[j]*array[k])
-  allCase.sort((a,b)=>b-a);
-  return allCase[0];
-}
+"use strict";
+var largestProductOfThree = function (arr) {
+    var largestProduct = arr[0] * arr[1] * arr[2];
+    for (var i = 0; i < arr.length - 2; i++) {
+        for (var j = i + 1; j < arr.length - 1; j++) {
+            for (var k = j + 1; k < arr.length; k++) {
+                var willCompareNumber = arr[i] * arr[j] * arr[k];
+                if (willCompareNumber > largestProduct) {
+                    largestProduct = willCompareNumber;
+                }
+            }
+        }
+    }
+    return largestProduct;
+};
+largestProductOfThree([2, 3, -11, 7, 5, -13]);
+//# sourceMappingURL=largestProductOfThree.js.map
