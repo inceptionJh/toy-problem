@@ -1,4 +1,3 @@
-"use strict";
 /**
  * Write a function that, given two objects, returns whether or not the two
  * are deeply equivalent--meaning the structure of the two objects is the
@@ -12,7 +11,7 @@
  * don't worry about handling cyclical object structures.
  *
  */
-var deepEquals = function (apple, orange) {
-    return JSON.stringify(apple) === JSON.stringify(orange);
+
+var deepEquals = function(apple: object, orange: object) {
+  return JSON.stringify(apple) === JSON.stringify(orange);
 };
-//# sourceMappingURL=deepEquality.js.map
