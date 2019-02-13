@@ -1,4 +1,3 @@
-"use strict";
 /*
  * Return an array with the power set of a given string.
  * Definition of power set: The set of all possible subsets including the empty set.
@@ -17,22 +16,27 @@
  * powerSet("jump")
  * -> ["", "j", "ju", "jm", "jp", "jmu", "jmp", "jpu", "jmpu", "u", "m", "p", "mu", "mp", "pu", "mpu"]
  */
-const getChars = function (str, n) {
-    const chars = [];
-    if (n > 0) {
-        for (let i = n; i < str.length; i++) {
-            chars.push(str[i]);
-            getChars(str, n);
-        }
+
+const getChars = function(str: string, n: number): string[] {
+  const chars: string[] = [];
+
+  if (n > 0) {
+    for (let i = n; i < str.length; i++) {
+      chars.push(str[i]);
+      getChars(str, n);
     }
-    return chars;
+  }
+
+  return chars;
 };
-const powerSet = function (str) {
-    const result = [];
-    for (let i = 0; i < str.length; i++) {
-        const chars = getChars(str, i);
-        result.concat(chars);
-    }
-    return result;
+
+const powerSet = function(str: string) {
+  const result: string[] = [];
+
+  for (let i = 0; i < str.length; i++) {
+    const chars = getChars(str, i);
+    result.concat(chars);
+  }
+
+  return result;
 };
-//# sourceMappingURL=powerSet.js.map
