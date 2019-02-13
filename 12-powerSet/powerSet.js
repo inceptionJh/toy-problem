@@ -15,7 +15,7 @@
  * Example 2 :
  *
  * powerSet("jump")
- * -> ["", "j", "ju", "jm", "jp", "jmu", "jmp", "jpu", "jmpu", "u", "m", "p", "mu", "mp", "pu", "mpu"]
+ * ->  ["", "j", "ju", "jm", "jp", "jmu", "jmp", "jpu", "jmpu", "u", "m", "p", "mu", "mp", "pu", "mpu"]
  */
 const getChars = function (str, n) {
     const chars = [];
