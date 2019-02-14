@@ -26,64 +26,45 @@
  *
  */
 
-class Tree {
-  value: number;
+type Filter = (value?: number | boolean, depth?: number) => boolean;
+
+interface ITree {
   children: Tree[];
+  value: number | boolean;
   depth: number;
 
-  constructor(value: number) {
-    this.value = value;
+  BFSelect: (filter: Filter) => void;
+  addChild: (tree: number) => void;
+}
+
+class Tree implements ITree {
+  public children: Tree[];
+  public value: number | boolean;
+  public depth: number;
+
+  constructor(value: number | boolean) {
     this.children = [];
+    this.value = value;
     this.depth = 0;
   }
 
-  BFSelect(filter: Function) {
-    function pushFiltedChild(children: Tree[]) {
-      for (let child of children) {
-        if (filter(child.value, child.depth)) {
-          selectedChild.push(child.value);
-        }
-
-        pushFiltedChild(child.children);
-      }
-    }
-
-    const selectedChild = filter(this.value, this.depth) ? [this.value] : [];
-    pushFiltedChild(this.children);
-    return selectedChild;
+  addChild(child: number | boolean): void {
+    const childTree = new Tree(child);
+    childTree.depth = this.depth + 1;
+    this.children.push(childTree);
   }
 
-  addChild(child: Tree) {
-    if (this.isDescendant(child)) {
-      throw new Error("That child is already a child of this tree");
+  BFSelect(filter?: Filter): number[] {
+    let result: number[] = [];
+
+    if (filter(this.value, this.depth)) {
+      result.push(this.value as number);
     }
 
-    this.children.push(child);
-    child.depth = this.depth + 1;
-    return child;
-  }
-
-  isDescendant(child: Tree) {
-    if (this.children.indexOf(child) !== -1) {
-      return true;
+    for (const child of this.children) {
+      result = result.concat(child.BFSelect(filter));
     }
 
-    for (var i = 0; i < this.children.length; i++) {
-      if (this.children[i].isDescendant(child)) {
-        return true;
-      }
-    }
-
-    return false;
-  }
-
-  removeChild(child: Tree) {
-    var index = this.children.indexOf(child);
-
-    if (index === -1) {
-      throw new Error("That node is not an immediate child of this tree");
-    }
-
-    this.children.splice(index, 1);
+    return result;
   }
 }

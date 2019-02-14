@@ -1,48 +1,24 @@
 "use strict";
 class Tree {
     constructor(value) {
-        this.value = value;
         this.children = [];
+        this.value = value;
         this.depth = 0;
     }
-    BFSelect(filter) {
-        function pushFiltedChild(children) {
-            for (let child of children) {
-                if (filter(child.value, child.depth)) {
-                    selectedChild.push(child.value);
-                }
-                pushFiltedChild(child.children);
-            }
-        }
-        const selectedChild = filter(this.value, this.depth) ? [this.value] : [];
-        pushFiltedChild(this.children);
-        return selectedChild;
-    }
     addChild(child) {
-        if (this.isDescendant(child)) {
-            throw new Error("That child is already a child of this tree");
-        }
-        this.children.push(child);
-        child.depth = this.depth + 1;
-        return child;
+        const childTree = new Tree(child);
+        childTree.depth = this.depth + 1;
+        this.children.push(childTree);
     }
-    isDescendant(child) {
-        if (this.children.indexOf(child) !== -1) {
-            return true;
+    BFSelect(filter) {
+        let result = [];
+        if (filter(this.value, this.depth)) {
+            result.push(this.value);
         }
-        for (var i = 0; i < this.children.length; i++) {
-            if (this.children[i].isDescendant(child)) {
-                return true;
-            }
+        for (const child of this.children) {
+            result = result.concat(child.BFSelect(filter));
         }
-        return false;
-    }
-    removeChild(child) {
-        var index = this.children.indexOf(child);
-        if (index === -1) {
-            throw new Error("That node is not an immediate child of this tree");
-        }
-        this.children.splice(index, 1);
+        return result;
     }
 }
 //# sourceMappingURL=treeBFSelect.js.map
