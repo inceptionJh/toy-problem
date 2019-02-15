@@ -30,23 +30,31 @@
  *  pipe(add2, multiplyBy3)(5) // 21
  *  pipe(add2, multiplyBy3, multiplyBy3)(5) // 63
  */
+
 "use strict";
-var compose = function (...argsFn) {
-    return function (param) {
-        let result = argsFn[argsFn.length - 1](param);
-        for (let i = argsFn.length - 2; i >= 0; i--) {
-            result = argsFn[i](result);
-        }
-        return result;
-    };
+
+type NumAndStr = number | string;
+
+var compose = function(...argsFn: Function[]): Function {
+  return function(param: NumAndStr): NumAndStr {
+    let result = argsFn[argsFn.length - 1](param);
+
+    for (let i = argsFn.length - 2; i >= 0; i--) {
+      result = argsFn[i](result);
+    }
+
+    return result;
+  };
 };
-var pipe = function (...argsFn) {
-    return function (param) {
-        let result = argsFn[0](param);
-        for (let i = 1; i < argsFn.length; i++) {
-            result = argsFn[i](result);
-        }
-        return result;
-    };
+
+var pipe = function(...argsFn: Function[]): Function {
+  return function(param: NumAndStr): NumAndStr {
+    let result = argsFn[0](param);
+
+    for (let i = 1; i < argsFn.length; i++) {
+      result = argsFn[i](result);
+    }
+
+    return result;
+  };
 };
-//# sourceMappingURL=composePipe.js.map
