@@ -1,3 +1,4 @@
+"use strict";
 /*
  * Given a sorted array, find the index of an element
  * using a binary search algorithm.
@@ -7,26 +8,17 @@
  * var index = binarySearch([1, 2, 3, 4, 5], 4);
  * console.log(index); // [3]
  */
-
-
 var binarySearch = function (array, target) {
-  let low = 0;
-  let high = array.length - 1;
-  
-  while (low <= high) {
-    let mid = Math.floor((low + high) / 2);
-    
-    if(array[mid] > target) {
-      high = mid - 1;
+    let likeEnum = [];
+    array.forEach((v, i) => {
+        likeEnum[i] = [i, v];
+    });
+    while (likeEnum.length) {
+        const mid = Math.floor(likeEnum.length / 2);
+        if (likeEnum[mid][1] === target) {
+            return likeEnum[mid][0];
+        }
+        likeEnum = likeEnum[mid][1] > target ? likeEnum.slice(0, mid) : likeEnum.slice(mid + 1, likeEnum.length);
     }
-    
-    if(array[mid] < target) {
-      low = mid + 1;
-    }
-    
-    if(array[mid] === target) {
-      return mid;
-    }
-
-  }
 };
+//# sourceMappingURL=binarySearchArray.js.map
