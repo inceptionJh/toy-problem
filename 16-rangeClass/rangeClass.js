@@ -1,3 +1,4 @@
+"use strict";
 /**
  * Build a class to represent a range of numbers that takes:
  *   - a beginning index,
@@ -37,41 +38,67 @@
  * evenNumbers.size() should be 4
  * evenNumbers.includes(2) should be true, evenNumbers.includes(3) should be false
  */
-
-
-var Range = function (start, end, step) {
-  this.start = start;
-  this.end = end;
-
-  if(start < end) {
-    this.step = step ? step : 1;
-  }
-  else {
-    this.step = step ? step : -1;
-  }
-};
-
-Range.prototype.size = function () {
-  if (this.end !== undefined) {
-    const diff = Math.abs(this.end - this.start);  
-    const size = diff / Math.abs(this.step);
-    // console.log("diff : ", diff);
-    // console.log("size : ", size);
-    return Math.floor(size);
-  }
-  return this.start;
-};
-
-Range.prototype.each = function (callback) {
-  for (let i = this.start; i < this.size(); i++) {
-    callback(i);
-  }
-};
-
-Range.prototype.includes = function (val) {
-
-};
-
-var range = new Range(0, 10, 2);
-
-// console.log(range.size());
+class _ArrLike {
+    constructor() {
+        this.length = 0;
+        Object.defineProperty(this, "length", { value: 0, enumerable: false });
+    }
+    push(value) {
+        this[this.length] = value;
+        this.length++;
+    }
+}
+class _Range {
+    constructor(startOrRange, end, step) {
+        this.startOrRange = startOrRange;
+        this.end = end;
+        this.step = step;
+        this.structure = new _ArrLike();
+        if (end === undefined) {
+            for (let i = 0; i < startOrRange; i++) {
+                this.structure.push(i + 1);
+            }
+        }
+        if (end !== undefined) {
+            const start = startOrRange;
+            end > start ? this.setIncreasingRangeStructure() : this.setDecreasingRangeStructure();
+        }
+    }
+    size() {
+        return this.structure.length;
+    }
+    each(callback) {
+        for (let i = 0; i < this.structure.length; i++) {
+            callback(this.structure[i]);
+        }
+    }
+    includes(value) {
+        for (let i = 0; i < this.structure.length; i++) {
+            if (this.structure[i] === value) {
+                return true;
+            }
+        }
+        return false;
+    }
+    setIncreasingRangeStructure() {
+        const start = this.startOrRange;
+        const end = this.end;
+        const step = this.step === undefined ? 1 : this.step;
+        const structureLength = Math.floor((end - start) / step + 1);
+        for (let i = 0; i < structureLength; i++) {
+            const value = start + i * step;
+            this.structure.push(value);
+        }
+    }
+    setDecreasingRangeStructure() {
+        const start = this.startOrRange;
+        const end = this.end;
+        const step = this.step === undefined ? -1 : this.step;
+        const structureLength = Math.floor((start - end) / -step + 1);
+        for (let i = 0; i < structureLength; i++) {
+            const value = start + i * step;
+            this.structure.push(value);
+        }
+    }
+}
+//# sourceMappingURL=rangeClass.js.map
