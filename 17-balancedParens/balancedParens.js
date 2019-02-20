@@ -1,3 +1,4 @@
+"use strict";
 /*
  * write a function that takes a string of text and returns true if
  * the parentheses are balanced and false otherwise.
@@ -23,7 +24,29 @@
  *
  *
  */
-var balancedParens = function(input){
+var balancedParens = function (input) {
+    const leftBrackets = ["(", "{", "["];
+    const rightBrackets = [")", "}", "]"];
+    const bracketStore = [];
+    for (const char of input) {
+        const hasCharInLeftBracket = leftBrackets.indexOf(char) > -1;
+        if (hasCharInLeftBracket) {
+            bracketStore.push(char);
+            continue;
+        }
+        const hasCharInRightBracket = rightBrackets.indexOf(char) > -1;
+        if (!hasCharInRightBracket) {
+            continue;
+        }
+        const matchedRightIndex = leftBrackets.indexOf(bracketStore.pop() || "");
+        const isSameBracket = rightBrackets[matchedRightIndex] === char;
+        if (!isSameBracket) {
+            return false;
+        }
+    }
+    const didYouHaveValueStore = bracketStore.length > 0;
+    if (didYouHaveValueStore) {
+        return false;
+    }
+    return true;
 };
-
-
