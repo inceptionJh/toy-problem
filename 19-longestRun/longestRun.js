@@ -1,3 +1,4 @@
+"use strict";
 /**
  * Write a function that, given a string, Finds the longest run of identical
  * characters and returns an array containing the start and end indices of
@@ -11,61 +12,37 @@
  * Try your function with long, random strings to make sure it handles large
  * inputs well.
  */
-
-/**
- * @param {String} string
- */
-function longestRun(string) {
-  if(string.length === 0) return [0, 0];
-  /**
-   * ### example  
-   * - string: "aaabbc"
-   *```js
-    {
-        a: 3,
-        b: 2,
-        c: 1
+class Extracter {
+    constructor(string) {
+        this.string = string;
     }
-    ```
-   */
-  const charLengths = {};
-
-  // make charLengths content
-  for (let idx = 0; idx < string.length; idx++) {
-    const char = string[idx];
-
-    if (charLengths.hasOwnProperty(char)) {
-      charLengths[char] += 1;
-    } else {
-      charLengths[char] = 1;
+    getCharInfos() {
+        const charInfos = {};
+        for (let i = 0; i < this.string.length; i++) {
+            if (this.string[i] !== this.string[i - 1]) {
+                charInfos[this.string[i]] = { startIdx: i, endIdx: i };
+                continue;
+            }
+            charInfos[this.string[i]].endIdx = i;
+        }
+        return charInfos;
     }
-  }
-
-  // find longest char
-  let maxChar = { char: "", length: 0 };
-
-  for (let char in charLengths) {
-    const lengthOfChar = charLengths[char];
-
-    maxChar =
-      maxChar.length >= lengthOfChar
-        ? maxChar
-        : { char, length: charLengths[char] };
-  }
-
-  const startIdx = string.indexOf(maxChar.char);
-  return [startIdx, startIdx+maxChar.length-1];
+    getLongestChar() {
+        const charInfos = this.getCharInfos();
+        let result;
+        for (let key in charInfos) {
+            if (result === undefined)
+                result = [charInfos[key].startIdx, charInfos[key].endIdx];
+            const currentMaxLen = result[1] - result[0] + 1;
+            const nextMaxLen = charInfos[key].endIdx - charInfos[key].startIdx + 1;
+            result = currentMaxLen >= nextMaxLen ? result : [charInfos[key].startIdx, charInfos[key].endIdx];
+        }
+        return result === undefined ? [0, 0] : result;
+    }
 }
-
-// If you need a random string generator, use this!
-// (you wont need this function for your solution but it may help with testing)
-var randomString = function(len) {
-  var text = "";
-  var possible = "abcdefghijklmnopqrstuvwxyz";
-
-  for (var i = 0; i < len; i++) {
-    text += possible.charAt(Math.floor(Math.random() * possible.length));
-  }
-
-  return text;
+const longestRun = function (string) {
+    const extracter = new Extracter(string);
+    const lengestChar = extracter.getLongestChar();
+    return lengestChar;
 };
+//# sourceMappingURL=longestRun.js.map
